@@ -62,11 +62,16 @@ xm, err, fxm = [], [], []
 
 
 tolerance = pow(10, -int(input('Enter Tolerance:')))
+print('iteration   Upper value   Lower value   Xm   f(Xm)   Relative approximate error')
+
 temp_tolerance = None
 i = 0
 while temp_tolerance is None or temp_tolerance > tolerance:
     st = fp.run()
-    print(i + 1, st.x_n, st.x_p, st.x_m, st.err, st.f_xm)
+    if st.err is not None:
+        print('%3d %10.5f %10.5f %10.5f %10.5f  %10.5f '%(i + 1, st.x_p, st.x_n, st.x_m, st.f_xm, st.err))
+    else:
+        print('%3d %10.5f %10.5f %10.5f %10.5f    -------  '%(i + 1, st.x_p, st.x_n, st.x_m, st.f_xm))
     xm.append(st.x_m)
     err.append(st.err)
     fxm.append(st.f_xm)
@@ -74,9 +79,8 @@ while temp_tolerance is None or temp_tolerance > tolerance:
     i += 1
 
 plt.ylabel('Error')
-plt.xlabel('xm')
-plt.plot(xm,err)
-plt.show()
+plt.xlabel('Iteration')
 plt.plot(err)
+plt.savefig('fp.png')
 plt.show()
 

@@ -28,15 +28,11 @@ class Bisection:
 
     @staticmethod
     def function(x):
-        n=0
-        ans = 1
-        temp = 0.0
-        for k in range(1, 11):
-            a = pow(-1, k)
-            b = pow((pow(x, 2) / 4), k)
-            c = math.factorial(k) * math.factorial(k)
-            temp += a * b / c;
-        return ans * temp
+        ca0 = 42
+        cb0 = 28
+        cc0 = 4
+        k = 0.016
+        return ((cc0 + x) / (pow((ca0 - 2 * x), 2) * (cb0 - x)))-k
 
     @staticmethod
     def error(x_new, x_old):
@@ -57,61 +53,31 @@ class Bisection:
         return st
 
 
-x=1
-while x<3.1:
-    print(x)
-    print(Bisection.function(x))
-    print()
-    x+=0.1
-
-tolerance_flag = False
-if input()=='1':
-    tolerance_flag = True
-
 bs = Bisection(float(input('Enter x1: ')), float(input('Enter x2: ')))
 
 xm, err, fxm = [], [], []
 
-if tolerance_flag is False:
-    iterations = int(input('Enter Iterations: '))
-    for i in range(iterations):
-        st = bs.run()
-        print(i + 1, st.x_n, st.x_p, st.x_m, st.err, st.f_xm)
-        xm.append(st.x_m)
-        err.append(st.err)
-        fxm.append(st.f_xm)
-else:
-    tolerance = pow(10, -int(input('Enter Tolerance:')))
-    temp_tolerance = None
-    i = 0
-    while temp_tolerance is None or temp_tolerance>tolerance:
-        st = bs.run()
-        print(i + 1, st.x_n, st.x_p, st.x_m, st.err, st.f_xm)
-        xm.append(st.x_m)
-        err.append(st.err)
-        fxm.append(st.f_xm)
-        temp_tolerance=st.err
-        i += 1
 
+tolerance = pow(10, -int(input('Enter Tolerance:')))
+print('iteration   Upper value   Lower value   Xm   f(Xm)   Relative approximate error')
 
-'''
-plt.plot(xm)
-plt.ylabel('X mid')
-plt.xlabel('Iterations')
-plt.show()
-'''
+temp_tolerance = None
+i = 0
+while temp_tolerance is None or temp_tolerance > tolerance:
+    st = bs.run()
+    if st.err is not None:
+        print('%3d %10.5f %10.5f %10.5f %10.5f  %10.5f '%(i + 1, st.x_p, st.x_n, st.x_m, st.f_xm, st.err))
+    else:
+        print('%3d %10.5f %10.5f %10.5f %10.5f    -------  '%(i + 1, st.x_p, st.x_n, st.x_m, st.f_xm))
+    xm.append(st.x_m)
+    err.append(st.err)
+    fxm.append(st.f_xm)
+    temp_tolerance = st.err
+    i += 1
+
 plt.ylabel('Error')
-plt.xlabel('xm')
-plt.plot(xm,err)
-plt.show()
-plt.clf()
-plt.ylabel('it')
-plt.xlabel('err')
-'''
-ax1 = plt.subplot()
-
-ax1.set_ylim(-.0005,.0005)
-ax1.set_xlim(0.05,.09)
-'''
+plt.xlabel('Iteration')
 plt.plot(err)
+plt.savefig('solve2/bs.png')
 plt.show()
+

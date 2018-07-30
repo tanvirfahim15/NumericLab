@@ -28,15 +28,11 @@ class Bisection:
 
     @staticmethod
     def function(x):
-        n=0
-        ans = 1
-        temp = 0.0
-        for k in range(1, 11):
-            a = pow(-1, k)
-            b = pow((pow(x, 2) / 4), k)
-            c = math.factorial(k) * math.factorial(k)
-            temp += a * b / c;
-        return ans * temp
+        ca0 = 42
+        cb0 = 28
+        cc0 = 4
+        k = 0.016
+        return ((cc0 + x) / (pow((ca0 - 2 * x), 2) * (cb0 - x)))-k
 
     @staticmethod
     def error(x_new, x_old):
@@ -56,13 +52,13 @@ class Bisection:
             self.x_neg = self.x_mid
         return st
 
+graph=[]
+for i in range(1,21):
+    graph.append(Bisection.function(i))
+    print(Bisection.function(i))
 
-x=1
-while x<3.1:
-    print(x)
-    print(Bisection.function(x))
-    print()
-    x+=0.1
+plt.plot(graph)
+plt.show()
 
 tolerance_flag = False
 if input()=='1':
@@ -94,24 +90,9 @@ else:
         i += 1
 
 
-'''
-plt.plot(xm)
-plt.ylabel('X mid')
-plt.xlabel('Iterations')
-plt.show()
-'''
-plt.ylabel('Error')
-plt.xlabel('xm')
+plt.ylabel('err')
+plt.xlabel('X mid')
 plt.plot(xm,err)
 plt.show()
-plt.clf()
-plt.ylabel('it')
-plt.xlabel('err')
-'''
-ax1 = plt.subplot()
-
-ax1.set_ylim(-.0005,.0005)
-ax1.set_xlim(0.05,.09)
-'''
 plt.plot(err)
 plt.show()
