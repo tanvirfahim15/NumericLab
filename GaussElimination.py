@@ -1,4 +1,6 @@
 import numpy as np
+
+
 class GaussElimination:
     matrix = []
 
@@ -11,7 +13,7 @@ class GaussElimination:
         col = int(input("Enter column: "))
         mat = []
         for i in range(row):
-            row=[]
+            row = []
             for j in range(col):
                 row.append(float(input()))
             mat.append(row)
@@ -19,7 +21,7 @@ class GaussElimination:
 
     @staticmethod
     def swap_row(mat, i, j):
-        mat[[i, j]]=mat[[j, i]]
+        mat[[i, j]] = mat[[j, i]]
         return mat
 
     def eliminate(self, row, eliminating_row):
@@ -36,19 +38,19 @@ class GaussElimination:
         for current_row in range(row-1):
             if partial_pivoting is not None:
                 max_row = current_row
-                for i in range(current_row,row):
-                    if self.matrix[i][current_row]>self.matrix[max_row][current_row]:
+                for i in range(current_row, row):
+                    if self.matrix[i][current_row] > self.matrix[max_row][current_row]:
                         max_row = i
                 self.matrix = GaussElimination.swap_row(self.matrix, current_row, max_row)
-            for eliminating_row in range(current_row+1,row):
+            for eliminating_row in range(current_row+1, row):
                 self.eliminate(current_row, eliminating_row)
         return
 
     def backward(self):
         row = len(self.matrix)
-        solve  = [0.0 for i in range(row)]
+        solve = [0.0 for i in range(row)]
         for i in reversed(range(row)):
-            if self.matrix[i][i]==0:
+            if self.matrix[i][i] == 0:
                 raise ValueError('No unique solution')
             for j in range(i+1, row):
                 solve[i] -= self.matrix[i][j]*solve[j]
@@ -64,7 +66,7 @@ class GaussElimination:
         solve = self.solve()
         if len(solve) != len(parameters):
             raise ValueError('Invalid parameters')
-        return np.dot(np.asarray(solve),np.asarray(parameters))
+        return np.dot(np.asarray(solve), np.asarray(parameters))
 
 
 matrix = np.asarray([[25.0, 5.0, 1.0, 106.8],
