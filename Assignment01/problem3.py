@@ -74,8 +74,6 @@ class SecantMethod:
 
 
 nr = SecantMethod(0.5, 0.4).run(tolerance=int(input('Enter Tolerance: ')))
-
-
 for n in nr:
     n.print()
 

@@ -58,7 +58,11 @@ class NewtonRaphson:
 
                 temp_tolerance = NewtonRaphson.error(x_im1, x_i)
                 x_im1 = x_i
-                x_i -= self.f(x_i) / self.df(x_i)
+                try:
+                    x_i -= self.f(x_i) / self.df(x_i)
+                except ZeroDivisionError:
+                    print('Derivative Zero Exception')
+                    return status_s
                 i += 1
             return status_s
 
@@ -76,30 +80,32 @@ class B(NewtonRaphson):
         return math.exp(-0.5*x)*(4 - x) - 2
 
     def df(self, x):
-        return -math.exp(-0.5*x)*(4-x)*(-0.5)*math.exp(-0.5*x)
+        return -0.5*math.exp(-0.5*x)*(4-x)-math.exp(-0.5*x)
 
 
+print('Problem 2(a)')
 nr = A(5.0).run(tolerance=int(input('Enter Tolerance: ')))
 
 for n in nr:
     n.print()
 
-
+print()
+print('Problem 2(b)')
 tolerance = int(input('Enter Tolerance: '))
 
-try:
-    nr = B(2.0).run(tolerance=tolerance)
-    for n in nr:
-        n.print()
-except OverflowError:
-    print('s')
+print('Initial Guess: 2.0')
+nr = B(2.0).run(tolerance=tolerance)
+for n in nr:
+    n.print()
 
-
+input('Press [ENTER] to continue\n')
+print('Initial Guess: 6.0')
 nr = B(6.0).run(tolerance=tolerance)
 for n in nr:
     n.print()
 
-
+input('Press [ENTER] to continue\n')
+print('Initial Guess: 8.0')
 nr = B(8.0).run(tolerance=tolerance)
 for n in nr:
     n.print()
