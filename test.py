@@ -1,36 +1,19 @@
-digits = [str(i) for i in range(9)]
-digits.append('.')
-digits.append('-')
+import numpy as np
+
+matrix = np.asarray([[25.0, 5.0, 1.0],
+                     [64.0, 8.0, 1.0],
+                     [144.0, 12.0, 1.0]])
 
 
-def parse_term(term):
-    coefficient, var = '',''
-    for char in term:
-        if char not in digits:
-            var += char
-        elif len(var)>0:
-            var += char
-        else:
-            coefficient += char
-    if coefficient == '':
-        return 1.0, var
-    elif coefficient == '-':
-        return -1.0, var
-    return float(coefficient), var
+def det(matrix):
+    if len(matrix) == 2:
+        return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0]
+    result = 0.0
+    for i in range(len(matrix)):
+        temp = np.copy(np.concatenate((matrix[1:, 0:i], matrix[1:, i + 1:]), axis=1))
+        print(temp)
+        result += ((-1) ** i) * det(temp)
+        print(det(temp))
+    return result
 
-
-def parse_eq(eq):
-    eq = eq.replace(' ','')
-    eq = eq.split('=')
-    rhs = float(eq[1])
-    print(rhs)
-    eq = eq[0].replace('-','+-')
-    eq = eq.split('+')
-    for term in eq:
-        if len(term) > 0:
-            print(parse_term(term))
-    return eq
-
-
-eq = '-s-2.0a+3b-c=9'
-parse_eq(eq)
+print(det(matrix))

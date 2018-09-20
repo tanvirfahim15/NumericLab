@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-
+import math
 
 class state:
     def __init__(self, x_n, x_p, x_m, err, f_xm):
@@ -26,7 +26,8 @@ class FalsePosition:
 
      @staticmethod
      def function(x):
-        return pow(x-4, 2)*(x+2)\
+        return x*math.tan(x)-3
+        return -13-20*x+19*x*x-3*x*x*x
 
      @staticmethod
      def error(x_new, x_old):
@@ -61,6 +62,7 @@ for i in range(iterations):
     xm.append(st.x_m)
     err.append(st.err)
     fxm.append(st.f_xm)
+    '''
 plt.plot(xm)
 plt.ylabel('X mid')
 plt.xlabel('Iterations')
@@ -72,4 +74,4 @@ plt.show()
 plt.ylabel('F(X mid)')
 plt.xlabel('X mid')
 plt.scatter(xm,fxm)
-plt.show()
+plt.show()'''

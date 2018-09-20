@@ -21,13 +21,15 @@ class NewtonRaphson:
 
     @staticmethod
     def f(x):
-        return pow(x-4, 2)*(x+2)
-        return pow(x, 3) - 0.165 * pow(x, 2) + 3.993 * pow(10, -4)
+        return x*x*math.exp(-x)-0.5
+        #return pow(x-4, 2)*(x+2)
+        #return pow(x, 3) - 0.165 * pow(x, 2) + 3.993 * pow(10, -4)
 
     @staticmethod
     def df(x):
-        return 2*(x-4)*(x+2)+pow(x-4, 2)
-        return 3*pow(x, 2) - 0.165 * 2 * x
+        return 2*x*math.exp(-x)-math.exp(-x)*x*x
+        #return 2*(x-4)*(x+2)+pow(x-4, 2)
+        #return 3*pow(x, 2) - 0.165 * 2 * x
 
     @staticmethod
     def error(x_old, x_new):
@@ -72,7 +74,7 @@ nr = NewtonRaphson(-2.3).run(tolerance=4)
 for n in nr:
     n.print()
 
-nr = NewtonRaphson(0.05).run(iterations=5)
+nr = NewtonRaphson(0.2).run(iterations=5)
 
 for n in nr:
     n.print()

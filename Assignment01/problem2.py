@@ -11,7 +11,8 @@ class Status:
         self.err = err
 
     def print(self):
-        print(self.i, self.x, self.fx, self.dfx, self.err)
+        print("    {0:02}    ".format(self.i), "   {0:.4f}".format(self.x), "   {0:.5f}".format(self.fx),
+              "   {0:.4f}   ".format(self.dfx), self.err)
 
 
 class NewtonRaphson:
@@ -83,29 +84,38 @@ class B(NewtonRaphson):
         return -0.5*math.exp(-0.5*x)*(4-x)-math.exp(-0.5*x)
 
 
+solve = 0.0
 print('Problem 2(a)')
 nr = A(5.0).run(tolerance=int(input('Enter Tolerance: ')))
-
+print('iteration       xi       f(xi)     f’(xi)     Relative approximate error')
 for n in nr:
     n.print()
-
+    solve = n.x
+print("Solution: ", solve)
 print()
 print('Problem 2(b)')
 tolerance = int(input('Enter Tolerance: '))
 
 print('Initial Guess: 2.0')
+print('iteration       xi       f(xi)     f’(xi)     Relative approximate error')
 nr = B(2.0).run(tolerance=tolerance)
 for n in nr:
     n.print()
-
+    solve = n.x
+print("Solution: ", solve)
 input('Press [ENTER] to continue\n')
 print('Initial Guess: 6.0')
+print('iteration       xi       f(xi)     f’(xi)     Relative approximate error')
 nr = B(6.0).run(tolerance=tolerance)
 for n in nr:
     n.print()
-
+    solve = n.x
+print("Solution: ", solve)
 input('Press [ENTER] to continue\n')
 print('Initial Guess: 8.0')
+print('iteration       xi       f(xi)     f’(xi)     Relative approximate error')
 nr = B(8.0).run(tolerance=tolerance)
 for n in nr:
     n.print()
+    solve = n.x
+print("Solution: ", solve)

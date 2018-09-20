@@ -41,7 +41,7 @@ class Bisection:
     def error(x_new, x_old):
         if x_old is None:
             return None
-        return 100*(x_new-x_old)/x_new
+        return math.fabs(100*(x_new-x_old)/x_new)
 
     def run(self):
         new_mid = (self.x_neg + self.x_pos) / 2
@@ -84,7 +84,7 @@ class FalsePosition:
     def error(x_new, x_old):
         if x_old is None:
             return None
-        return 100 * (x_new - x_old) / x_new
+        return math.fabs(100 * (x_new - x_old) / x_new)
 
     @staticmethod
     def get_mid(x1, x2):
@@ -115,7 +115,7 @@ def frange(start, stop, step):
 x1 = float(input('Enter x1: '))
 x2 = float(input('Enter x2: '))
 for m in frange(x1, x2, 0.1):
-    print(m, Bisection.function(m))
+    print("{0:.2f}  ".format(m), Bisection.function(m))
 
 
 bs = Bisection(x1, x2)
@@ -125,15 +125,18 @@ xm_bs, err_bs, fxm_bs = [], [], []
 tolerance = pow(10, -int(input('Enter tolerance: ')))
 
 print('Bisection Method: ')
+print('iteration   Upper value  Lower value      Xm         f(Xm)     Relative approximate error')
 i = 0
 while True:
     st = bs.run()
-    print(i+1, st.x_n, st.x_p, st.x_m, st.f_xm, st.err)
+    print("    {0:02}    ".format(i+1), "   {0:.4f}".format(st.x_p), "      {0:.4f}".format(st.x_n),
+          "    {0:.4f}".format(st.x_m), "    {0:.4f}    ".format(st.f_xm), st.err)
     i = i + 1
     xm_bs.append(st.x_m)
     err_bs.append(st.err)
     fxm_bs.append(st.f_xm)
     if st.err is not None and tolerance > st.err > -tolerance:
+        print("Solution: "+str(st.x_m)+'\n')
         break
 
 
@@ -142,35 +145,43 @@ fp = FalsePosition(x1, x2)
 xm_fp, err_fp, fxm_fp = [], [], []
 
 print('False Position Method: ')
+print('iteration   Upper value  Lower value      Xr         f(Xr)     Relative approximate error')
 i = 0
 while True:
     st = fp.run()
-    print(i+1, st.x_n, st.x_p, st.x_m, st.f_xm, st.err)
+    print("    {0:02}    ".format(i + 1), "   {0:.4f}".format(st.x_p), "      {0:.4f}".format(st.x_n),
+          "    {0:.4f}".format(st.x_m), "    {0:.4f}    ".format(st.f_xm), st.err)
     i = i + 1
     xm_fp.append(st.x_m)
     err_fp.append(st.err)
     fxm_fp.append(st.f_xm)
     if st.err is not None and tolerance > st.err > -tolerance:
+        print("Solution: "+str(st.x_m)+'\n')
         break
 
+
 plt.scatter(xm_bs, err_bs)
 plt.xlabel('x')
 plt.ylabel('Error')
+plt.savefig('solve1/Bisection (Xm vs Error).png')
 plt.show()
 
 plt.ylabel('Error')
 plt.xlabel('Iterations')
 plt.plot(err_bs)
+plt.savefig('solve1/Bisection (Error).png')
 plt.show()
 
 plt.scatter(xm_fp, err_fp)
 plt.xlabel('x')
 plt.ylabel('Error')
+plt.savefig('solve1/False Position (Xr vs Error).png')
 plt.show()
 
 plt.ylabel('Error')
 plt.xlabel('Iterations')
 plt.plot(err_fp)
+plt.savefig('solve1/False Position (Error).png')
 plt.show()
 
 
@@ -178,12 +189,13 @@ plt.ylabel('Error')
 plt.xlabel('Iterations')
 plt.plot(err_bs)
 plt.plot(err_fp)
+plt.savefig('solve1/Error vs Iterations.png')
 plt.show()
 
 plt.ylabel('Error')
 plt.xlabel('Iterations')
 plt.scatter(xm_bs, err_bs)
 plt.scatter(xm_fp, err_fp)
+plt.savefig('solve1/Error vs Xm.png')
 plt.show()
-
 

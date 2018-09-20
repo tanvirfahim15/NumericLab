@@ -12,7 +12,8 @@ class Status:
         self.err = err
 
     def print(self):
-        print(self.i,self.x,self.x_i_m_1,self.fx,self.dfx,self.err)
+        print("    {0:02}    ".format(self.i), "   {0:.4f}".format(self.x_i_m_1),"   {0:.4f}".format(self.x),
+              "   {0:.5f}".format(self.fx), "   {0:.4f}   ".format(self.dfx), self.err)
 
 
 class SecantMethod:
@@ -73,8 +74,12 @@ class SecantMethod:
             return status_s
 
 
-nr = SecantMethod(0.5, 0.4).run(tolerance=int(input('Enter Tolerance: ')))
-for n in nr:
+sc = SecantMethod(0.5, 0.4).run(tolerance=int(input('Enter Tolerance: ')))
+solve = 0.0
+print('iteration      x(i-1)     xi       f(xi)     f’(xi)     Relative approximate error')
+for n in sc:
     n.print()
+    solve = n.x
 
+print("Solution: ", solve)
 

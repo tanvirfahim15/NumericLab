@@ -23,6 +23,7 @@ class SecantMethod:
 
     @staticmethod
     def f(x):
+        return 2*pow(x,3)+7*x*x-14*x+5
         return pow(x-4,2)*(x+2)
         return pow(x, 3) - 0.165 * pow(x, 2) + 3.993 * pow(10, -4)
 
@@ -74,7 +75,7 @@ class SecantMethod:
             return status_s
 
 
-nr = SecantMethod(2.5,-1).run(tolerance=4)
+nr = SecantMethod(-5.5,-4.5).run(tolerance=4)
 
 
 for n in nr:

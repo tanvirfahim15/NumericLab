@@ -22,7 +22,8 @@ class Bisection:
 
      @staticmethod
      def function(x):
-        return pow(x, 3)-0.165*pow(x, 2)+3.993*pow(10, -4)
+        return pow(x,3)-pow(x,2)-11*x+12
+        return 4*pow(x, 3)-6*pow(x, 2)+7*x-2.3
 
      @staticmethod
      def error(x_new, x_old):
@@ -52,6 +53,7 @@ for i in range(iterations):
     xm.append(st.x_m)
     err.append(st.err)
     fxm.append(st.f_xm)
+    '''
 plt.plot(xm)
 plt.ylabel('X mid')
 plt.xlabel('Iterations')
@@ -63,4 +65,4 @@ plt.show()
 plt.ylabel('F(X mid)')
 plt.xlabel('Iterations')
 plt.plot(fxm)
-plt.show()
+plt.show()'''
