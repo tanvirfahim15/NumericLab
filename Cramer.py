@@ -20,6 +20,6 @@ class Cramer:
 matrix = np.asarray([[25.0, 5.0, 1.0, 106.8],
                      [64.0, 8.0, 1.0, 177.2],
                      [144.0, 12.0, 1.0, 279.2]])
-c = Cremer(matrix)
+c = Cramer(matrix)
 for i in range(len(c.matrix)):
     print(c.solve(i))

@@ -13,6 +13,7 @@ class Problem02:
         for i in range(len(_matrix)):
             self.matrix.append(np.append(_matrix[i], Problem02.get_one(i, len(_matrix[i]))))
         self.matrix = np.asarray(self.matrix)
+        print(self.matrix)
 
     @staticmethod
     def get_one(i, n):
@@ -40,7 +41,9 @@ class Problem02:
     def eliminate(self, row, eliminating_row):
         if self.matrix[row][row] == 0:
             raise ValueError("division by zero")
+        print('row', eliminating_row, '-= row', row, '*', self.matrix[eliminating_row][row]/self.matrix[row][row])
         self.matrix[eliminating_row] -= self.matrix[row]*self.matrix[eliminating_row][row]/self.matrix[row][row]
+        print(self.matrix)
         return
 
     def forward(self):
@@ -52,12 +55,16 @@ class Problem02:
 
     def one(self):
         for i in range(len(self.matrix)):
+            print("row", i, "/=", self.matrix[i][i])
             self.matrix[i] /= self.matrix[i][i]
+            print(self.matrix)
 
     def backward(self):
         for i in reversed(range(len(self.matrix))):
             for j in reversed(range(i)):
+                print('row', j, '-= row', i, '*',self.matrix[j][i])
                 self.matrix[j] -= self.matrix[i]*self.matrix[j][i]
+                print(self.matrix)
 
     def inverse(self):
         self.forward()
@@ -71,11 +78,12 @@ file = open(input('Enter file name: ')).readlines()
 matrix = eq.Equation(file).get_matrix()
 keys = matrix[1]
 matrix = matrix[0]
+print(matrix)
 p = Problem02(matrix)
 solve = np.dot(p.inverse(), p.c)
 out = open('out.txt', 'w')
 for i in range(len(keys)):
-    if float(solve[i]) < eps:
+    if -eps < float(solve[i]) < eps:
         out.write(str(keys[i]) + ' : ' + str(float(0))+'\n')
     else:
         out.write(str(keys[i]) + ' : ' + str(float(solve[i]))+'\n')
