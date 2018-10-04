@@ -41,7 +41,7 @@ class Problem02:
     def eliminate(self, row, eliminating_row):
         if self.matrix[row][row] == 0:
             raise ValueError("division by zero")
-        print('row', eliminating_row, '-= row', row, '*', self.matrix[eliminating_row][row]/self.matrix[row][row])
+        print('row[', eliminating_row, '] -= row[', row, '] *', self.matrix[eliminating_row][row]/self.matrix[row][row])
         self.matrix[eliminating_row] -= self.matrix[row]*self.matrix[eliminating_row][row]/self.matrix[row][row]
         print(self.matrix)
         return
@@ -55,14 +55,14 @@ class Problem02:
 
     def one(self):
         for i in range(len(self.matrix)):
-            print("row", i, "/=", self.matrix[i][i])
+            print("row[", i, "]/=", self.matrix[i][i])
             self.matrix[i] /= self.matrix[i][i]
             print(self.matrix)
 
     def backward(self):
         for i in reversed(range(len(self.matrix))):
             for j in reversed(range(i)):
-                print('row', j, '-= row', i, '*',self.matrix[j][i])
+                print('row[', j, '] -= row[', i, '] *',self.matrix[j][i])
                 self.matrix[j] -= self.matrix[i]*self.matrix[j][i]
                 print(self.matrix)
 
